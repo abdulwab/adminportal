@@ -35,67 +35,64 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-[726px]">
         {/* Logo */}
-        <div className="text-center mb-[70px]">
+        <div className="text-center mb-8 sm:mb-12 md:mb-[70px]">
           <Image
             src="/logo.png"
             alt="Logo"
             width={300}
             height={118}
-            className="mx-auto"
+            className="mx-auto w-[200px] h-auto sm:w-[250px] md:w-[300px]"
             priority
           />
         </div>
         
         {/* Login Form Card */}
-        <div className="bg-card rounded-2xl px-[66px] py-[62px]">
-          <div className="text-center mb-[62px]">
-            <h2 className="text-[45px] font-semibold leading-[45px] text-foreground mb-[18px]">Login</h2>
-            <p className="text-[26px] leading-[33.8px] text-[rgb(139,133,174)]">
-              Your camels, your stats, your glory await inside.
-            </p>
+        <div className="bg-card rounded-2xl px-6 py-8 sm:px-10 sm:py-12 md:px-[66px] md:py-[62px]">
+          <div className="text-center mb-8 sm:mb-12 md:mb-[62px]">
+            <h2 className="text-3xl sm:text-4xl md:text-[45px] font-semibold leading-tight md:leading-[45px] text-foreground">
+              Admin Login
+            </h2>
           </div>
           
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">
             {/* Email Field */}
-            <div className="space-y-3">
-              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="email">
+            <div className="space-y-2 md:space-y-3">
+              <label className="text-lg sm:text-xl md:text-[25px] font-semibold leading-tight md:leading-[32.5px] text-foreground block" htmlFor="email">
                 Email
               </label>
-              <div className="relative">
-                <input 
-                  id="email" 
-                  type="email" 
-                  className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
-                  placeholder="adrianhalim@email.com" 
-                  {...register('email')} 
-                />
-              </div>
+              <input 
+                id="email" 
+                type="email" 
+                className="w-full h-14 sm:h-16 md:h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-xl sm:text-2xl md:text-[30px] leading-tight md:leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                placeholder="adrianhalim@email.com" 
+                {...register('email')} 
+              />
               {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
             </div>
             
             {/* Password Field */}
-            <div className="space-y-3">
-              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="password">
+            <div className="space-y-2 md:space-y-3">
+              <label className="text-lg sm:text-xl md:text-[25px] font-semibold leading-tight md:leading-[32.5px] text-foreground block" htmlFor="password">
                 Password
               </label>
               <input 
                 id="password" 
                 type="password" 
-                className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                className="w-full h-14 sm:h-16 md:h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-xl sm:text-2xl md:text-[30px] leading-tight md:leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
                 placeholder="••••••••" 
                 {...register('password')} 
               />
               {errors.password && (
                 <p className="text-sm text-destructive">{errors.password.message}</p>
               )}
-              <div className="text-right pt-[14px]">
+              <div className="text-right pt-2 md:pt-[14px]">
                 <Link 
-                  className="text-[20px] font-semibold leading-[26px] text-[rgb(111,123,145)] hover:text-foreground transition-colors" 
+                  className="text-base sm:text-lg md:text-[20px] font-semibold leading-tight md:leading-[26px] text-[rgb(111,123,145)] hover:text-foreground transition-colors" 
                   href="/forgot-password"
                 >
                   Forget Password ?
@@ -111,35 +108,13 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={auth.status === 'loading'}
-              className="w-full btn-primary h-[80px] flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="w-full btn-primary h-14 sm:h-16 md:h-[80px] flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-50"
             >
-              <span className="text-[26px] font-bold leading-[31.72px]">
+              <span className="text-xl sm:text-2xl md:text-[26px] font-bold leading-tight md:leading-[31.72px]">
                 {auth.status === 'loading' ? 'Signing in…' : 'Login'}
               </span>
             </button>
           </form>
-          
-          {/* Or Login With Section */}
-          <div className="mt-[31px]">
-            <p className="text-[20px] font-semibold leading-[24.4px] text-foreground text-center mb-6">
-              Or Login with
-            </p>
-            <div className="flex gap-4 justify-center">
-              <button 
-                type="button"
-                className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors"
-              >
-                Google
-              </button>
-              <button 
-                type="button"
-                onClick={() => router.push('/login-phone')}
-                className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors"
-              >
-                Phone Number
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
