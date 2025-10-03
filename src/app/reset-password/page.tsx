@@ -6,10 +6,14 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 const schema = z.object({
-  email: z.string().email('Enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  confirmPassword: z.string().min(6, 'Password must be at least 6 characters'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ['confirmPassword'],
 })
 
-export default function ForgotPasswordPage() {
+export default function ResetPasswordPage() {
   const router = useRouter()
   const {
     register,
@@ -20,8 +24,8 @@ export default function ForgotPasswordPage() {
   })
 
   function onSubmit(values: z.infer<typeof schema>) {
-    console.log('Forgot password for:', values.email)
-    router.push('/otp-email')
+    console.log('New password:', values.password)
+    router.push('/success')
   }
 
   return (
@@ -39,35 +43,47 @@ export default function ForgotPasswordPage() {
           />
         </div>
 
-        {/* Forgot Password Form Card */}
+        {/* Reset Password Form Card */}
         <div className="bg-card rounded-2xl px-6 py-8 sm:px-10 sm:py-12 md:px-[66px] md:py-[62px]">
           <div className="mb-8 sm:mb-12 md:mb-[62px] text-center">
             <h2 className="text-3xl sm:text-4xl md:text-[45px] font-semibold leading-tight md:leading-[45px] text-card-foreground mb-3 md:mb-[18px]">
-              Forgot Password
+              Set New Password
             </h2>
             <p className="text-xl sm:text-2xl md:text-[30px] text-muted-foreground leading-tight md:leading-[39px]">
-              Don&apos;t worry! It occurs.
-              <br />
-              Please enter the Phone or Email
-              <br />
-              linked with your account.
+              Your new password must be different from previously used passwords.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 md:space-y-8">
             <div className="space-y-2 md:space-y-3">
-              <label className="text-lg sm:text-xl md:text-[25px] font-semibold text-card-foreground leading-tight md:leading-[32.5px] block" htmlFor="email">
-                Email
+              <label className="text-lg sm:text-xl md:text-[25px] font-semibold text-card-foreground leading-tight md:leading-[32.5px] block" htmlFor="password">
+                New Password
               </label>
               <input
-                id="email"
-                type="email"
+                id="password"
+                type="password"
                 className="w-full h-14 sm:h-16 md:h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-xl sm:text-2xl md:text-[30px] leading-tight md:leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
-                placeholder="adrianhalim@gmail.com"
-                {...register('email')}
+                placeholder="••••••••"
+                {...register('password')}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+              {errors.password && (
+                <p className="text-sm text-destructive">{errors.password.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2 md:space-y-3">
+              <label className="text-lg sm:text-xl md:text-[25px] font-semibold text-card-foreground leading-tight md:leading-[32.5px] block" htmlFor="confirmPassword">
+                Confirm Password
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                className="w-full h-14 sm:h-16 md:h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-xl sm:text-2xl md:text-[30px] leading-tight md:leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                placeholder="••••••••"
+                {...register('confirmPassword')}
+              />
+              {errors.confirmPassword && (
+                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
               )}
             </div>
 
@@ -76,7 +92,7 @@ export default function ForgotPasswordPage() {
               className="w-full btn-primary h-14 sm:h-16 md:h-[80px] flex items-center justify-center transition-opacity hover:opacity-90"
             >
               <span className="text-xl sm:text-2xl md:text-[26px] font-bold leading-tight md:leading-[31.72px]">
-                Continue
+                Reset Password
               </span>
             </button>
           </form>
