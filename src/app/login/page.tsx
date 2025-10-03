@@ -25,9 +25,11 @@ export default function LoginPage() {
   } = useForm<FormValues>({ resolver: zodResolver(schema) })
 
   const onSubmit = async (values: FormValues) => {
-    const res = await dispatch(login(values))
-    if ((res as any).type.endsWith('/fulfilled')) {
+    try {
+      await dispatch(login(values)).unwrap()
       router.push('/dashboard')
+    } catch {
+      // error state is handled in the slice and rendered below
     }
   }
 

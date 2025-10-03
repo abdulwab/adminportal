@@ -33,8 +33,9 @@ export const login = createAsyncThunk(
         name: 'Admin User',
         email: params.email,
       } as AuthUser;
-    } catch (err: any) {
-      return rejectWithValue(err.message ?? 'Login failed');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Login failed';
+      return rejectWithValue(message);
     }
   }
 );
