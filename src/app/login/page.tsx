@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
 import { login } from '../../store/slices/authSlice'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
