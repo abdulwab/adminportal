@@ -9,13 +9,14 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 const schema = z.object({
-  email: z.string().email('Enter a valid email'),
+  countryCode: z.string().min(1, 'Required'),
+  phoneNumber: z.string().min(10, 'Enter a valid phone number'),
   password: z.string().min(6, 'At least 6 characters'),
 })
 
 type FormValues = z.infer<typeof schema>
 
-export default function LoginPage() {
+export default function LoginPhonePage() {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const auth = useAppSelector((s) => s.auth)
@@ -23,11 +24,20 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) })
+  } = useForm<FormValues>({ 
+    resolver: zodResolver(schema),
+    defaultValues: {
+      countryCode: '+971'
+    }
+  })
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await dispatch(login(values)).unwrap()
+      // Convert phone to email format for mock auth
+      await dispatch(login({ 
+        email: `${values.phoneNumber}@phone.mock`, 
+        password: values.password 
+      })).unwrap()
       router.push('/dashboard')
     } catch {
       // error state is handled in the slice and rendered below
@@ -59,22 +69,28 @@ export default function LoginPage() {
           </div>
           
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            {/* Email Field */}
+            {/* Phone Number Field */}
             <div className="space-y-3">
-              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="email">
-                Email
+              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block">
+                Phone Number
               </label>
-              <div className="relative">
+              <div className="flex gap-3">
+                {/* Country Code Input */}
                 <input 
-                  id="email" 
-                  type="email" 
-                  className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
-                  placeholder="adrianhalim@email.com" 
-                  {...register('email')} 
+                  type="text" 
+                  className="w-[129px] h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[24px] leading-[24px] font-bold text-foreground text-center focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                  {...register('countryCode')} 
+                />
+                {/* Phone Number Input */}
+                <input 
+                  type="tel" 
+                  className="flex-1 h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[24px] leading-[24px] font-medium text-foreground placeholder:text-foreground focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                  placeholder="1234 5678 90" 
+                  {...register('phoneNumber')} 
                 />
               </div>
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+              {errors.phoneNumber && (
+                <p className="text-sm text-destructive">{errors.phoneNumber.message}</p>
               )}
             </div>
             
@@ -93,7 +109,7 @@ export default function LoginPage() {
               {errors.password && (
                 <p className="text-sm text-destructive">{errors.password.message}</p>
               )}
-              <div className="text-right pt-[14px]">
+              <div className="text-right pt-[12px]">
                 <Link 
                   className="text-[20px] font-semibold leading-[26px] text-[rgb(111,123,145)] hover:text-foreground transition-colors" 
                   href="/forgot-password"
@@ -127,16 +143,16 @@ export default function LoginPage() {
             <div className="flex gap-4 justify-center">
               <button 
                 type="button"
+                onClick={() => router.push('/login')}
                 className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors"
               >
-                Google
+                Email
               </button>
               <button 
                 type="button"
-                onClick={() => router.push('/login-phone')}
                 className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors"
               >
-                Phone Number
+                Google
               </button>
             </div>
           </div>
@@ -145,3 +161,4 @@ export default function LoginPage() {
     </div>
   )
 }
+
