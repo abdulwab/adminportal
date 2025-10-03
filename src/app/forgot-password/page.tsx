@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
               Forgot Password
             </h2>
             <p className="text-xl sm:text-2xl md:text-[30px] text-muted-foreground leading-tight md:leading-[39px]">
-              Don't worry! It occurs. Please enter the Phone or Email linked with your account.
+              Don&apos;t worry! It occurs. Please enter the Phone or Email linked with your account.
             </p>
           </div>
 
