@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const schema = z.object({
   email: z.string().email('Enter a valid email'),
@@ -18,28 +19,62 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-sm">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold tracking-tight">Forgot password</h2>
-          <p className="text-muted-foreground">We will send you an OTP to reset your password</p>
+    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+      <div className="w-full max-w-[726px]">
+        {/* Logo */}
+        <div className="text-center mb-[70px]">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={300}
+            height={118}
+            className="mx-auto"
+            priority
+          />
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="email">Email</label>
-            <input id="email" type="email" className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="you@example.com" {...register('email')} />
-            {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+        
+        {/* Forgot Password Card */}
+        <div className="bg-card rounded-2xl px-[66px] py-[67px]">
+          <div className="text-center mb-[47px]">
+            <h2 className="text-[45px] font-semibold leading-[45px] text-foreground mb-[23px]">Forgot Password</h2>
+            <p className="text-[30px] leading-[39px] text-[rgb(139,133,174)]">
+              Don&apos;t worry! It occurs.<br />
+              Please enter the Phone or Email<br />
+              linked with your account.
+            </p>
           </div>
-          <button type="submit" disabled={isSubmitting} className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:opacity-90 disabled:opacity-50">
-            {isSubmitting ? 'Sending…' : 'Send OTP'}
-          </button>
-        </form>
-        <div className="mt-4 text-sm">
-          <Link href="/login" className="text-primary underline-offset-2 hover:underline">Back to login</Link>
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
+            {/* Email Field */}
+            <div className="space-y-3">
+              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="email">
+                Email
+              </label>
+              <div className="relative">
+                <input 
+                  id="email" 
+                  type="email" 
+                  className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                  placeholder="adrianhalim@gmail.com" 
+                  {...register('email')} 
+                />
+              </div>
+              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+            </div>
+            
+            {/* Continue Button */}
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="w-full btn-primary h-[80px] flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              <span className="text-[26px] font-bold leading-[31.72px]">
+                {isSubmitting ? 'Sending…' : 'Continue'}
+              </span>
+            </button>
+          </form>
         </div>
       </div>
     </div>
   )
 }
-
-

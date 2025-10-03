@@ -36,9 +36,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-[726px]">
         {/* Logo */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-[70px]">
           <Image
             src="/logo.png"
             alt="Logo"
@@ -50,66 +50,91 @@ export default function LoginPage() {
         </div>
         
         {/* Login Form Card */}
-        <div className="bg-card rounded-2xl p-8 border border-border">
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold tracking-tight text-card-foreground">Login</h2>
-            <p className="text-muted-foreground mt-2">Enter your credentials to access your account</p>
+        <div className="bg-card rounded-2xl px-[66px] py-[62px]">
+          <div className="text-center mb-[62px]">
+            <h2 className="text-[45px] font-semibold leading-[45px] text-foreground mb-[18px]">Login</h2>
+            <p className="text-[26px] leading-[33.8px] text-[rgb(139,133,174)]">
+              Your camels, your stats, your glory await inside.
+            </p>
           </div>
           
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-card-foreground" htmlFor="email">Email</label>
-              <input 
-                id="email" 
-                type="email" 
-                className="w-full rounded-lg border border-border bg-input px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
-                placeholder="you@example.com" 
-                {...register('email')} 
-              />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+            {/* Email Field */}
+            <div className="space-y-3">
+              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="email">
+                Email
+              </label>
+              <div className="relative">
+                <input 
+                  id="email" 
+                  type="email" 
+                  className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
+                  placeholder="adrianhalim@email.com" 
+                  {...register('email')} 
+                />
+              </div>
               {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
             </div>
             
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-card-foreground" htmlFor="password">Password</label>
+            {/* Password Field */}
+            <div className="space-y-3">
+              <label className="text-[25px] font-semibold leading-[32.5px] text-foreground block" htmlFor="password">
+                Password
+              </label>
               <input 
                 id="password" 
                 type="password" 
-                className="w-full rounded-lg border border-border bg-input px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+                className="w-full h-[88px] rounded-xl bg-[rgb(43,37,74)] px-4 text-[30px] leading-[30px] font-medium text-foreground placeholder:text-[rgb(111,123,145)] focus:outline-none focus:ring-2 focus:ring-ring border-0"
                 placeholder="••••••••" 
                 {...register('password')} 
               />
               {errors.password && (
                 <p className="text-sm text-destructive">{errors.password.message}</p>
               )}
+              <div className="text-right pt-[14px]">
+                <Link 
+                  className="text-[20px] font-semibold leading-[26px] text-[rgb(111,123,145)] hover:text-foreground transition-colors" 
+                  href="/forgot-password"
+                >
+                  Forget Password ?
+                </Link>
+              </div>
             </div>
             
             {auth.error && (
               <p className="text-sm text-destructive">{auth.error}</p>
             )}
             
+            {/* Login Button */}
             <button
               type="submit"
               disabled={auth.status === 'loading'}
-              className="w-full btn-primary h-20 flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="w-full btn-primary h-[80px] flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-50"
             >
-              {auth.status === 'loading' ? 'Signing in…' : 'Login'}
+              <span className="text-[26px] font-bold leading-[31.72px]">
+                {auth.status === 'loading' ? 'Signing in…' : 'Login'}
+              </span>
             </button>
           </form>
           
-          <div className="mt-6 text-right">
-            <Link 
-              className="text-muted-foreground text-lg font-semibold hover:text-foreground transition-colors" 
-              href="/forgot-password"
-            >
-              Forgot Password ?
-            </Link>
+          {/* Or Login With Section */}
+          <div className="mt-[31px]">
+            <p className="text-[20px] font-semibold leading-[24.4px] text-foreground text-center mb-6">
+              Or Login with
+            </p>
+            <div className="flex gap-4 justify-center">
+              <button className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors">
+                Google
+              </button>
+              <button className="px-6 py-3 bg-[rgb(43,37,74)] rounded-xl text-foreground hover:bg-opacity-80 transition-colors">
+                Phone Number
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-
